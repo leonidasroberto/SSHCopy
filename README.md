@@ -6,6 +6,7 @@ Ferramenta gráfica para utilização do SCP via ssh para linux.
 <p>sudo chmod 755 SSHCopy</p>
 <p>sudo apt install sshpass</p>
 <p>Usar !!!<p/>
+# Tela Principal:
 <p>
 <img src="https://i.ibb.co/tQC9wMY/githubbb.png" alt="Tela principal" />
 </p>

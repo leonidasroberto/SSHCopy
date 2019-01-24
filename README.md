@@ -1,5 +1,5 @@
 # SSHCopy
-Ferramenta gráfica para utilização do SCP via ssh
+Ferramenta gráfica para utilização do SCP via ssh para linux.
 # Instalação: 
 <p>git clone https://github.com/leonidasroberto/SSHCopy</p>
 <p>cd SSHCopy</p>

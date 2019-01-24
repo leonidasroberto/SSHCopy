@@ -7,5 +7,5 @@ Ferramenta gráfica para utilização do SCP via ssh para linux.
 <p>sudo apt install sshpass</p>
 <p>Usar !!!<p/>
 <p>
-<img src="https://uploaddeimagens.com.br/imagens/githubbb-png" alt="Tela principal" />
+<img src="https://i.ibb.co/tQC9wMY/githubbb.png" alt="Tela principal" />
 </p>

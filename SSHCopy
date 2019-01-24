@@ -1,0 +1,138 @@
+#!/bin/bash
+zero=0
+
+while [ $zero = 0 ]
+do
+men1=$(cat ./log | grep us | awk -F ":" '{print $2}')
+men2=$(cat ./log | grep ip | awk -F ":" '{print $2}')
+men3=$(cat ./log | grep sen | awk -F ":" '{print $2}')
+salv=0
+a=$(zenity --title "COPIADOR SSH" --forms --text "Por: Leonidas R.B.J" --add-entry "IP" --add-entry "Usuário" \
+--add-password="Senha" --add-combo="Utilizar já existente:" --combo-values "|$men2" \
+--add-list "O que deseja fazer ?" --column-values nenhum --list-values "Enviar-pasta|Baixar-pasta|Enviar-Arquivo|Baixar-Arquivo")
+sen=$( echo "$a" | awk -F "|" '{print $3}')
+ip=$( echo "$a" | awk -F "|" '{print $1}')
+us=$( echo "$a" | awk -F "|" '{print $2}')
+tipo=$( echo "$a" | awk -F "|" '{print $5}')
+salv=$( echo "$a" | awk -F "|" '{print $4}')
+#IDENTIFICAR ERRO
+#echo -e "$salv\n$men1" > erros
+
+#################PRIMEIRO CASE
+case "$salv" in
+	$men2)
+us=$men1
+ip=$men2
+sen=$men3
+################PRIMEIRO CASE
+case "$tipo" in 
+Enviar-pasta)
+di=$(zenity --title "Selecione o Diretorio" --file-selection --directory)
+sshpass -p $sen scp -r $di $us@$ip:./
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+Baixar-pasta)
+ar=$(zenity --title "Informe o arquivo:" --text "informe o caminho do Diretorio" --entry)
+sa=$(zenity --title "Salvar Pasta" --text "Como deseja salva o Diretório:" --entry)
+sshpass -p $sen scp -r $us@$ip:$ar ./$sa
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+Enviar-Arquivo)
+ar=$(zenity --title "Selecione o arquivo" --file-selection)
+sshpass -p $sen scp $ar $us@$ip:
+# | zenity --title "Enviando Arquivo" --text "Aguard..." --progress --pulsate --auto-close
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+Baixar-Arquivo)
+ar=$(zenity --title "Informe o arquivo:" --text "informe o caminho do arquivo" --entry)
+sa=$(zenity --title "Salvar Aquivo" --text "Como deseja salva o arquivo:" --entry)
+sshpass -p $sen scp $us@$ip:$ar ./$sa
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+esac
+################FIM DO SEGUNDO CASE
+;;
+################
+	*)
+echo -e "us:$us\nip:$ip\nsen:$sen" > log
+#men1=$(cat ./log | grep us | awk -F ":" '{print $2}')
+#men2=$(cat ./log | grep ip | awk -F ":" '{print $2}')
+case "$tipo" in 
+Enviar-pasta)
+di=$(zenity --title "Selecione o Diretorio" --file-selection --directory)
+sshpass -p $sen scp -r $di $us@$ip:./
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+Baixar-pasta)
+ar=$(zenity --title "Informe o arquivo:" --text "informe o caminho do Diretorio" --entry)
+sa=$(zenity --title "Salvar Pasta" --text "Como deseja salva o Diretório:" --entry)
+sshpass -p $sen scp -r $us@$ip:$ar ./$sa
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+Enviar-Arquivo)
+ar=$(zenity --title "Selecione o arquivo" --file-selection)
+sshpass -p $sen scp $ar $us@$ip:
+# | zenity --title "Enviando Arquivo" --text "Aguard..." --progress --pulsate --auto-close
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+Baixar-Arquivo)
+ar=$(zenity --title "Informe o arquivo:" --text "informe o caminho do arquivo" --entry)
+sa=$(zenity --title "Salvar Aquivo" --text "Como deseja salva o arquivo:" --entry)
+sshpass -p $sen scp $us@$ip:$ar ./$sa
+if [ $? = 0 ]
+then
+zenity --title "Transferencia 100%" --info --text "Todos os arquivos foram transferidos com sucesso" --ellipsize
+else
+zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n report para: Leonidas R.B.J"
+fi
+;;
+esac
+##################################FIM DO PRIMEIRO CASE
+;;
+#fi
+esac
+###################################SO DEUS SABE
+zenity --title "Obrigado por utilizar" --question --text "Deseja voltar ao inicio ? \n Desenvolvido por: Leonidas Roberto B.J"
+if [ $? = 0 ]
+then
+zero=0
+else
+zero=1
+fi
+done
+

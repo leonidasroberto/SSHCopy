@@ -18,13 +18,13 @@ salv=$( echo "$a" | awk -F "|" '{print $4}')
 #IDENTIFICAR ERRO
 #echo -e "$salv\n$men1" > erros
 
-#################PRIMEIRO CASE
+################# CASE 1	
 case "$salv" in
 	$men2)
 us=$men1
 ip=$men2
 sen=$men3
-################PRIMEIRO CASE
+################ CASE 2
 case "$tipo" in 
 Enviar-pasta)
 di=$(zenity --title "Selecione o Diretorio" --file-selection --directory)
@@ -70,13 +70,14 @@ zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n
 fi
 ;;
 esac
-################FIM DO SEGUNDO CASE
+################FIM CASE 2
 ;;
 ################
 	*)
 echo -e "us:$us\nip:$ip\nsen:$sen" > log
 #men1=$(cat ./log | grep us | awk -F ":" '{print $2}')
 #men2=$(cat ./log | grep ip | awk -F ":" '{print $2}')
+############## CASE 3
 case "$tipo" in 
 Enviar-pasta)
 di=$(zenity --title "Selecione o Diretorio" --file-selection --directory)
@@ -122,11 +123,11 @@ zenity --title "Erro" --warning --text "ALGUM ERRO OCORREU DURANTE O PROCESSO \n
 fi
 ;;
 esac
-##################################FIM DO PRIMEIRO CASE
+################################## FIM CASE 3
 ;;
 #fi
 esac
-###################################SO DEUS SABE
+################################### FIM CASE 1
 zenity --title "Obrigado por utilizar" --question --text "Deseja voltar ao inicio ? \n Desenvolvido por: Leonidas Roberto B.J"
 if [ $? = 0 ]
 then
